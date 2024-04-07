@@ -1,0 +1,159 @@
+#include <stdio.h>
+ #include <stdlib.h>
+ struct node {
+   int data;
+   struct node *next;
+   struct node *prev;
+ };
+ void insertend(struct node **head, int data) {
+   struct node *nn = (struct node *)malloc(sizeof(struct node));
+   nn->data = data;
+   nn->next = NULL;
+   nn->prev = NULL;
+   if (*head == NULL) {
+     *head = nn;
+   } else {
+     struct node *temp = *head;
+     while (temp->next != NULL) {
+       temp = temp->next;
+     }
+     temp->next = nn;
+     nn->prev = temp;
+   }
+ }
+ void insertbeg(struct node **head, int data) {
+   struct node *nn = (struct node *)malloc(sizeof(struct node));
+   nn->data = data;
+   nn->next = NULL;
+   nn->prev = NULL;
+   if (*head == NULL) {
+     *head = nn;
+   } else {
+     nn->next = *head;
+     (*head)->prev = nn;
+     *head = nn;
+   }
+ }
+ void insertspos(struct node **head, int data, int pos) {
+   struct node *nn = (struct node *)malloc(sizeof(struct node));
+   nn->data = data;
+   nn->next = NULL;
+   nn->prev = NULL;
+   if (pos == 1) {
+     insertbeg(head, data);
+   } else {
+     int i = 1;
+     for (int i = 1; i < pos - 1; i++) {
+       struct node *temp = *head;
+       struct node *prev = temp;
+       prev = temp;
+       temp = temp->next;
+     }
+     nn->prev = (*head);
+     nn->next = (*head)->next;
+     (*head)->next = nn;
+   }
+ }
+ void delend(struct node **head) {
+   if (*head == NULL) {
+     printf("The list is Empty");
+   } else {
+     struct node *temp = *head;
+     struct node *prev = temp;
+     while (temp->next != NULL) {
+       prev = temp;
+       temp = temp->next;
+     }
+     prev->next = NULL;
+     free(temp);
+   }
+ }
+ void delbeg(struct node **head) {
+   if (*head == NULL) {
+     printf("List is Empty");
+   } else {
+     struct node *temp = *head;
+     struct node*prev=temp;
+     temp->next->prev = *head;
+     *head=temp->next;
+     free(temp);
+   }
+ }
+void delsp(struct node**head,int pos)
+{
+  struct node*temp=*head;
+  if(pos==1)
+  {
+    delbeg(head);
+  }
+  else if(pos==0)
+  {
+    printf("Invalid input");
+  }
+  else
+  {
+    int i=1;
+    for(int i=1;i<pos;i++)
+      {
+        temp=temp->next;
+      }
+    temp->prev->next=temp->next;
+    if(temp->next!=NULL){
+    temp->next->prev=temp->prev;
+    }
+    free(temp);
+  }
+}
+ void display(struct node *head) {
+   struct node *temp = head;
+   while (temp != NULL) {
+     printf("%d", temp->data);
+     temp = temp->next;
+   }
+ }
+ int main() {
+   struct node *head = NULL;
+   // insert at end
+   int d1, d2;
+   printf("Enter the data: ");
+   scanf("%d", &d1);
+   printf("Enter the data: ");
+   scanf("%d", &d2);
+   printf("nAfter insert at the end: ");
+   insertend(&head, d1);
+   insertend(&head, d2);
+   display(head);
+   // insert at begining
+   int b;
+   printf("\nEnter the data: ");
+   scanf("%d", &b);
+   printf("After insert at beg: ");
+   insertbeg(&head, b);
+   display(head);
+   // inser at specific pos
+   int pos, da;
+   printf("Enter the pos: ");
+   scanf("%d", &pos);
+   printf("Enter the data: ");
+   scanf("%d", &da);
+   printf("After add at pos:");
+   insertspos(&head, da, pos);
+   display(head);
+   // delete at end
+   printf("\n After delete the node at end: ");
+   delend(&head);
+   display(head);
+   // delete  at beg
+   printf("\n After the deletion at beg:");
+   delbeg(&head);
+   display(head);
+   //delete at sp pos
+   int dsp;
+   printf("Enter the pos: ");
+   scanf("%d",&dsp);
+   printf("After delet: ");
+   delsp(&head,dsp);
+   display(head);
+   count(head);
+   return 0;
+ }
