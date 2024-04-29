@@ -1,0 +1,93 @@
+//insering a node
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node{
+int data;
+struct node*left;
+struct node*right;
+};
+
+//creation of a newnode
+
+struct node*create(int data)
+{
+  struct node*node=(struct node*)malloc(sizeof(struct node));
+  node->data=data;
+  node->left=NULL;
+  node->right=NULL;
+
+  return(node);
+}
+
+//Given a binary tree,print its node in inorder
+void printInorder(struct node*node)
+{
+    if(node==NULL)
+        return;
+    //first recur on left side
+    printInorder(node->left);
+    //Then print the data of the node
+    //root
+    printf("%d",node->data);
+    //Now recur on right child
+    printInorder(node->right);
+
+}
+
+//print the node in preorder
+void preorder(struct node *node)
+{
+    {
+    if(node==NULL)
+        return;
+}
+printf("%d",node->data);
+preorder(node->left);
+preorder(node->right);
+}
+void postorder(struct node*node)
+{
+
+    {
+        if(node==NULL)
+            return;
+    }
+    postorder(node->left);
+    postorder(node->right);
+    printf("%d",node->data);
+}
+struct node*insert(struct node*r,int value)
+{
+ {
+     if(r==NULL)
+     {
+         r=create(value);
+         return r;
+     }
+         else
+         {
+             if(value<r->data)
+             {
+                 r->left=insert(r->left,value);
+             }
+             else
+             {
+                 r->right=insert(r->right,value);
+             }
+         }
+         return r;
+     }
+}
+
+int main()
+{
+    struct node*root=NULL;
+    root=insert(root,2);
+    root=insert(root,8);
+    root=insert(root,4);
+    printf("After insertion\n");
+    printInorder(root);
+
+
+}
