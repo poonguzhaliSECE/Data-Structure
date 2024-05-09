@@ -1,0 +1,85 @@
+//Queue using Linked List
+ #include <stdio.h>
+ #include<stdlib.h>
+struct node{
+    int data;
+    struct node*next;
+};
+struct node*front=NULL;
+struct node*rear=NULL;
+void enqueue(int x)
+{
+    struct node*nn;
+    nn=(struct node*)malloc(sizeof(struct node));
+    nn->data=x;
+    nn->next=NULL;
+    if(front==NULL&rear==NULL)
+    {
+        front=rear=nn;
+    }
+    else
+    {
+        rear->next=nn;
+        rear=nn;
+    }
+}
+void dequeue()
+{
+    if(front==NULL&&rear==NULL)
+    {
+        printf("Queue is Empty");
+    }
+    else
+    {
+        struct node*temp;
+        temp=front;
+        front=front->next;
+        free(temp);
+    }
+}
+void display()
+{
+    if(front==NULL&&rear==NULL)
+    {
+        printf("Queue is Empty");
+    }
+    else
+    {
+        struct node*temp;
+        temp=front;
+        while(temp!=NULL)
+        {
+            printf("%d ",temp->data);
+            temp=temp->next;
+        }
+    }
+}
+void peak()
+{
+    if(front==NULL&&rear==NULL)
+    {
+       printf("Queue is Empty"); 
+    }
+    else
+    {
+        printf("\n%d",front->data);
+    }
+}
+int main()
+{
+    enqueue(2);
+    enqueue(4);
+    enqueue(5);
+    printf("\nThe Enqued Elements : \n");
+    display();
+    printf("\nFront is: ");
+    peak();
+    printf("\nAfter dequeue: ");
+    dequeue();
+    display();
+    printf("\nFront is: ");
+    peak();
+    
+    
+    return 0;
+}
